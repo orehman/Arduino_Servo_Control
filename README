@@ -1,0 +1,1 @@
+Controlling a servo motor using an Arduino. Angle data is received through a serial port. The serial data is written using C#.
