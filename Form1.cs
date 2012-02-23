@@ -16,10 +16,12 @@ namespace Arduino_Control
         {
             InitializeComponent();
         }
-        bool stpBtnClk = false;
+        
+
         SerialPort sp = new SerialPort();
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Setting up specifications for serial communication
             sp.Close();
             sp.PortName = "COM4";
             sp.BaudRate = 9600;
@@ -31,38 +33,38 @@ namespace Arduino_Control
             sp.RtsEnable = true;
         }
 
+        // This occurs when clicking the "ON" button on the form
         private void onBtn_Click(object sender, EventArgs e)
         {
-            stpBtnClk = false;
-        //    for(int i=0; i<180; i++)
-        //{
-        //    //SendByte(i); // Send byte '1' to the Arduino
-        //    byte[] buffer = new byte[] { Convert.ToByte(i) };
-        //    sp.Write(buffer, 0, 1);
-
-
-        //    System.Threading.Thread.Sleep(20);
-        //}
+            // Infinite loop that outputs random numbers from 0-180 to emulate output from Kinect
+            // Need some kind of breakout but this is fine just for testing
             for (; ;)
             {
                 Random random = new Random();
                 int randomNumber = random.Next(0, 180);
-                byte[] buffer = new byte[] { Convert.ToByte(randomNumber) };
+                byte[] buffer = new byte[] { Convert.ToByte(randomNumber) };        // Convert from int to byte to output to Serial
                 sp.Write(buffer, 0, 1);
 
+                // 1 second pause
                 System.Threading.Thread.Sleep(1000);
 
-                if (stpBtnClk == true)
-                {
-                    break;
-                }
+
+
+                // This loop just output 1-180 incrementally to test the servo
+                //    for(int i=0; i<180; i++)
+                //{
+                //    //SendByte(i); // Send byte '1' to the Arduino
+                //    byte[] buffer = new byte[] { Convert.ToByte(i) };
+                //    sp.Write(buffer, 0, 1);
+
+
+                //    System.Threading.Thread.Sleep(20);
+                //}
             }
         }
 
-        private void stpBtn_Click(object sender, EventArgs e)
-        {
-
-        }
+     
+        // Testing a function to convert from int to byte
 
         //private void SendByte(byte byteToSend)
         //{
